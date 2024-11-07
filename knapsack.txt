@@ -1,0 +1,40 @@
+
+def knapsack_dp(values, weights, capacity):
+    n = len(values)
+    dp = [0] * (capacity + 1)  # Create a 1D array for DP
+
+    # Process each item one by one
+    for i in range(n):
+        # Update the dp array from right to left to avoid overwriting
+        for w in range(capacity, weights[i] - 1, -1):
+            dp[w] = max(dp[w], values[i] + dp[w - weights[i]])
+
+    return dp[capacity]  # The last element gives the maximum value for the full capacity
+
+'''# Example usage
+values = [2, 3, 1,4]
+weights = [3,4,6,5]
+capacity = 8
+print("Maximum value in knapsack:", knapsack_dp(values, weights, capacity))'''
+
+# Example usage with user input
+if __name__ == "__main__":
+    # Taking input for number of items
+    n = int(input("Enter the number of items: "))
+
+    # Taking input for values and weights
+    values = []
+    weights = []
+    print("Enter the values and weights of each item:")
+    for i in range(n):
+        value = int(input(f"Value of item {i + 1}: "))
+        weight = int(input(f"Weight of item {i + 1}: "))
+        values.append(value)
+        weights.append(weight)
+
+    # Taking input for knapsack capacity
+    capacity = int(input("Enter the maximum capacity of the knapsack: "))
+
+    # Calling the knapsack function and printing the result
+    max_value = knapsack_dp(values, weights, capacity)
+    print("Maximum value in knapsack:", max_value)

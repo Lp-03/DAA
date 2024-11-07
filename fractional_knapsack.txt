@@ -1,0 +1,29 @@
+def fractional_knapsack():
+    # Taking inputs for weights, values, and capacity
+    weights = list(map(int, input("Enter weights of items separated by spaces: ").split()))
+    values = list(map(int, input("Enter values of items separated by spaces: ").split()))
+    capacity = int(input("Enter the maximum capacity of the knapsack: "))
+
+    # Check if weights and values lists have the same length
+    if len(weights) != len(values):
+        print("Error: The number of weights and values must be the same.")
+        return
+
+    res = 0  # Initialize result for total maximum value
+
+    # Pair items as (weight, value) and sort by value-to-weight ratio in descending order
+    for pair in sorted(zip(weights, values), reverse=True):
+        if capacity <= 0:  # If the knapsack is full, stop adding items
+            break
+        if pair[0] > capacity:  # If current item's weight exceeds remaining capacity
+            # Add fractional value of the item
+            res += int(capacity * (pair[1] / pair[0]))
+            capacity = 0  # Knapsack is fully filled
+        else:  # Add the full item
+            res += pair[1]
+            capacity -= pair[0]
+
+    print("Maximum value in the knapsack:", res)
+
+if __name__ == "__main__":
+    fractional_knapsack()
